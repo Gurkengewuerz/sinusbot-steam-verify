@@ -1,0 +1,29 @@
+<?php
+$config["db_host"] = "localhost";
+$config["db_user"] = "ts3bot";
+$config["db_password"] = "CHANGEME";
+$config["db_database"] = "steamVerify";
+
+$config["steam_api_key"] = "GET IT FROM https://steamcommunity.com/dev/apikey";
+$config["steam_api_domainname"] = "yourVerifiyDomainForRedirect";
+
+$config["api_private_key"] = "CHANGEME";
+$config["api_head_admin"] = "765611980xxxxxx";
+
+// These Config entries got shown in ?page=help
+$config["ts_ip"] = "ts.example.org";
+$config["bot_name"] = "Test Bot";
+
+
+// DO NOT TOUCH!
+
+if ($config["api_private_key"] == "CHANGEME") {
+    exit("Please change the api_private_key configuration.");
+}
+
+$db = new mysqli($config["db_host"], $config["db_user"], $config["db_password"], $config["db_database"]);
+
+if ($db->connect_errno) {
+    printf("Connect failed: %s\n", $db->connect_error);
+    exit();
+}
