@@ -11,9 +11,6 @@ function generateRandomString($length = 8) {
     }
     return $randomString;
 }
-
-$random = generateRandomString();
-$db->query("UPDATE users SET verify_code = '" . $random . "', realname = '" . $db->real_escape_string($steamprofile['personaname']) . "' WHERE steam_id = '" . $steamprofile['steamid'] . "';");
 ?>
 
 <!DOCTYPE html>
@@ -213,13 +210,15 @@ $db->query("UPDATE users SET verify_code = '" . $random . "', realname = '" . $d
                             Write the Bot <em><?php echo $config["bot_name"]; ?></em> "<em>!check check_id</em>".
                         </li>
                         <li>
-                             If there was no error message you should got a list of clients that are associated with that id.
+                            If there was no error message you should got a list of clients that are associated with that id.
                         </li>
                     </ol>
                     <?php
                     break;
 
                 default:
+                    $random = generateRandomString();
+                    $db->query("UPDATE users SET verify_code = '" . $random . "', realname = '" . $db->real_escape_string($steamprofile['personaname']) . "' WHERE steam_id = '" . $steamprofile['steamid'] . "';");
                     ?>
                     <div class="container container-table">
                         <div class="row vertical-center-row">

@@ -56,12 +56,13 @@ if (isset($_GET["api_key"]) && !empty($_GET["api_key"])) {
             case "getClientsBySteamID":
                 if (isset($_GET["steam_id"]) && !empty($_GET["steam_id"])) {
                     $userdata = $db->query("SELECT * FROM steam_teamspeak RIGHT JOIN users ON users.steam_id = steam_teamspeak.steam_id WHERE users.steam_id='" . $db->real_escape_string($_GET["steam_id"]) . "';");
+                    $steamdata = $db->query("SELECT * FROM users WHERE steam_id='" . $db->real_escape_string($_GET["steam_id"]) . "' LIMIT 1;");
                     if (count($userdata->fetch_array()) > 0) {
                         $data["success"] = true;
-                        $data["name"] = $userdata->fetch_array()["realname"];
+                        $data["name"] = $steamdata->fetch_array()["realname"];
                         $data["teamspeakids"] = array();
                         foreach ($userdata as $key) {
-                            $data["teamspeakids"][$key["ts_uid"]] = $key["added"];
+                            $data["teamspeakids"][str_replace(" ", "+", $key["ts_uid"])] = $key["added"];
                         }
                     } else {
                         $data["error"] = "No Client found";

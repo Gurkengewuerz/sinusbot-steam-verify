@@ -136,12 +136,14 @@ registerPlugin({
                             var response = JSON.parse(response.data);
                             if (response["success"]) {
                                 // SUCCESS getClientsBySteamID
-                                var stringList = "Clients:\r\n";
+                                var stringList = "\r\n";
+                                stringList += cmd[1] + " is " + response["name"] + "\r\n\r\n";
+                                stringList += "Clients:\r\n";
                                 for (var key in response["teamspeakids"]) {
                                     var val = response["teamspeakids"][key];
                                     var client = backend.getClientByUniqueID(key);
                                     var clientName = "Unknown";
-                                    if(typeof client !== undefined){
+                                    if(client !== undefined){
                                         clientName = client.nick();
                                     }
                                     stringList += "- " + key + " => " + clientName + "\r\n";
